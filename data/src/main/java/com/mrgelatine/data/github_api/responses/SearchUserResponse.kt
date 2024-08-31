@@ -10,11 +10,12 @@ data class SearchUserResponse (
     val incompleteResults: Boolean,
 
     @SerializedName("items")
-    val items: List<GitHubSearchUser>)
+    val items: List<GitHubSearchUser>
+    )
 {
     data class GitHubSearchUser(
         @SerializedName("login")
-        val login: String,
+        override val name: String,
         @SerializedName("id")
         val id: Int,
         @SerializedName("node_id")
@@ -51,5 +52,5 @@ data class SearchUserResponse (
         val eventsUrl: String,
         @SerializedName("site_admin")
         val siteAdmin: Boolean
-    )
+    ): GitHubSearchResult
 }

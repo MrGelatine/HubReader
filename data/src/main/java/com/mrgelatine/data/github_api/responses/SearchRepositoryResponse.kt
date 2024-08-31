@@ -17,7 +17,7 @@ data class SearchRepositoryResponse(
         @SerializedName("node_id")
         val nodeId: String,
         @SerializedName("name")
-        val name: String,
+        override val name: String,
         @SerializedName("full_name")
         val fullName: String,
         @SerializedName("owner")
@@ -165,7 +165,7 @@ data class SearchRepositoryResponse(
         @SerializedName("license")
         val license: RepositoryLicense
 
-    )
+    ): GitHubSearchResult
     {
         data class RepositoryOwner(
             @SerializedName("login")
