@@ -1,6 +1,10 @@
-package com.mrgelatine.search
+package com.mrgelatine.search.searchscreen
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -10,10 +14,10 @@ import com.mrgelatine.data.github_api.responses.GitHubSearchResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+
 
 class SearchScreenViewModel: ViewModel(){
     private val _uiState = MutableStateFlow<PagingData<GitHubSearchResult>>(PagingData.empty())
@@ -41,6 +45,12 @@ class SearchScreenViewModel: ViewModel(){
                 Log.d("XXX:", e.toString())
             }
         }
+    }
+
+    fun redirectToUserProgile(context: Context, url: String){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+        startActivity(context, browserIntent, null)
     }
 
 }
