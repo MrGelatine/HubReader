@@ -7,9 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GitHubAPI {
-    @GET("/repositories")
+    @GET("users")
     fun searchUsers(@Query("q") userName: String, @Query("page")currentPage: Int): Call<SearchUserResponse>
 
-    @GET("/repositories")
+    @GET("repositories")
     fun searchRepositories(@Query("q") repositoryName: String, @Query("page")currentPage: Int): Call<SearchRepositoryResponse>
 }

@@ -14,16 +14,16 @@ import java.io.IOException
 
 class GitHubAPISearchController(){
 
-    val BASE_URL:String = "https://api.github.com/search"
+    val BASE_URL:String = "https://api.github.com/search/"
 
-    suspend fun startRepositorySearch(repository: String):List<GitHubSearchResult>? {
+    suspend fun startRepositorySearch(repository: String, currentPage: Int):List<GitHubSearchResult>? {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         val plannerokAPI = retrofit.create(GitHubAPI::class.java)
-        val call = plannerokAPI.searchRepositories(repository, currentPage = 1)
+        val call = plannerokAPI.searchRepositories(repository, currentPage = currentPage)
         val response = call.execute()
         if(response.isSuccessful) {
 
@@ -34,14 +34,14 @@ class GitHubAPISearchController(){
         }
 
     }
-    suspend fun startUserSearch(user: String): List<GitHubSearchResult>?{
+    suspend fun startUserSearch(user: String, currentPage: Int): List<GitHubSearchResult>?{
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         val githubAPI = retrofit.create(GitHubAPI::class.java)
-        val call = githubAPI.searchUsers(user, currentPage= 1)
+        val call = githubAPI.searchUsers(user, currentPage= currentPage)
         val response = call.execute()
         if(response.isSuccessful) {
             return response.body()!!.items
