@@ -13,7 +13,7 @@ interface GitHubAPI {
     fun searchUsers(@Query("q") userName: String, @Query("per_page")perPage: Int = 5, @Query("page")currentPage: Int): Call<SearchUserResponse>
 
     @GET("repositories")
-    fun searchRepositories(@Query("q") repositoryName: String, @Query("per_page")perPage: Int = 5, @Query("page")currentPage: Int): Call<SearchRepositoryResponse>
+    fun searchRepositories(@Query("q") repositoryName: String, @Query("per_page")perPage: Int = 10, @Query("page")currentPage: Int): Call<SearchRepositoryResponse>
 
     @GET("/repos/{owner}/{repo}/contents/{path}")
     fun getRepositoryData(@Path("owner") user:String, @Path("repo") repository: String, @Path("path") filePath: String): Call<List<DataInfo>>

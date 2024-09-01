@@ -9,7 +9,9 @@ import androidx.compose.material3.Surface
 
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
+import androidx.navigation.compose.rememberNavController
 import com.mrgelatine.hubreader.ui.theme.HubReaderTheme
+import com.mrgelatine.hubreader.ui.theme.navigation.HubReaderNavGraph
 import com.mrgelatine.search.searchscreen.SearchScreen
 
 class SearchScreenViewModel: ViewModel(){
@@ -28,7 +30,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    SearchScreen(context = this)
+                    val navController = rememberNavController()
+                    HubReaderNavGraph(context = this, navController = navController)
                 }
             }
         }

@@ -57,5 +57,15 @@ dependencies {
     //Paging
     implementation("androidx.paging:paging-compose:3.3.2")
 
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+    //Landscapist
+    implementation("com.github.skydoves:landscapist-glide:2.3.6")
+    implementation("com.github.skydoves:landscapist-placeholder:2.3.6")
+
+    //Shimmer
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1")
+
     implementation(project(":data"))
 }

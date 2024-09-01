@@ -21,25 +21,36 @@ import kotlinx.coroutines.launch
 
 class SearchScreenViewModel: ViewModel(){
     private val _uiState = MutableStateFlow<PagingData<GitHubSearchResult>>(PagingData.empty())
-    private val _request = MutableStateFlow<String>("")
+    private val _request = MutableStateFlow("")
+    private val _loading = MutableStateFlow(false)
+    private val _sendButtonState = MutableStateFlow(false)
     val uiState: StateFlow<PagingData<GitHubSearchResult>> = _uiState.asStateFlow()
     val request: StateFlow<String> = _request.asStateFlow()
+    val loading: StateFlow<Boolean> = _loading.asStateFlow()
+    val sendButtonState: StateFlow<Boolean> = _sendButtonState.asStateFlow()
 
     val repository = GitHubSearchRepository(viewModelScope)
 
+
     fun onRequestChange(r: String){
         _request.value = r
+        if(r.length < 3){
+            _sendButtonState.value = false
+        }else{
+            _sendButtonState.value = true
+        }
     }
 
     fun onSearchClicked() {
         viewModelScope.launch {
             try {
+                _loading.value = true
                 repository.getSearchResult(request.value)
                     .debounce(2000)
                     .distinctUntilChanged()
-                    .cachedIn(viewModelScope)
                     .collect { pagingData ->
                         _uiState.value = pagingData
+                        _loading.value = false
                 }
             } catch (e: Exception) {
                 Log.d("XXX:", e.toString())

@@ -12,7 +12,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class GitHubAPIGetController(
-    val state: MutableStateFlow<List<DataInfo>?>
+    val state: MutableStateFlow<List<DataInfo>?>,
+    val loading: MutableStateFlow<Boolean>,
+    val error: MutableStateFlow<Boolean>
 ): Callback<List<DataInfo>>{
 
     val BASE_URL:String = "https://api.github.com/"
@@ -34,11 +36,15 @@ class GitHubAPIGetController(
         if(response.isSuccessful) {
             state.value = response.body()!!
         }else {
+            error.value = true
             response.errorBody()?.let { Log.e("GitHubAPIGetController", it.string()) }
         }
+        loading.value = false
     }
 
     override fun onFailure(call: Call<List<DataInfo>>, response: Throwable) {
+        loading.value = false
+        error.value = true
         response.message.let { Log.e("GitHubAPIGetController", it!!) }
     }
 }

@@ -47,6 +47,7 @@ class GitHubAPISearchController(){
             return response.body()!!.items
         }else {
             response.errorBody()?.let { Log.e("SearchUsersController", it.string()) }
+            throw IOException()
             return null
         }
     }

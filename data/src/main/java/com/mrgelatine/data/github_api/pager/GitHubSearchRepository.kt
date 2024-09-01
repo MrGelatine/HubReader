@@ -21,7 +21,7 @@ class GitHubSearchRepository constructor(
     ) {
     suspend fun getSearchResult(request: String): Flow<PagingData<GitHubSearchResult>> {
         return Pager(
-            config = PagingConfig(pageSize = 30, prefetchDistance = 2),
+            config = PagingConfig(pageSize = 10, prefetchDistance = 5),
             pagingSourceFactory = {
                 GitHubSearchPagerSource(
                     searchUserDataSource,
