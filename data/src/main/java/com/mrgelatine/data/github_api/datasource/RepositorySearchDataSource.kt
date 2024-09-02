@@ -11,7 +11,7 @@ import kotlinx.coroutines.async
 class RepositorySearchDataSource(
     private val controller: GitHubAPISearchController
 ){
-    fun getSearchedRepositories(context: CoroutineScope, userName: String, currentPage: Int): Deferred<List<GitHubSearchResult>?> {
+    fun getSearchedRepositories(context: CoroutineScope, userName: String, currentPage: Int): Deferred<List<GitHubSearchResult>> {
         return context.async(Dispatchers.IO) {
             controller.startRepositorySearch(userName, currentPage)
         }

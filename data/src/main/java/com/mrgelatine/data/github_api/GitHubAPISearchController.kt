@@ -16,7 +16,7 @@ class GitHubAPISearchController(){
 
     val BASE_URL:String = "https://api.github.com/search/"
 
-    suspend fun startRepositorySearch(repository: String, currentPage: Int):List<GitHubSearchResult>? {
+    suspend fun startRepositorySearch(repository: String, currentPage: Int):List<GitHubSearchResult> {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -30,11 +30,11 @@ class GitHubAPISearchController(){
             return response.body()!!.items
         }else {
             response.errorBody()?.let { Log.e("SearchRepositoryController", it.string()) }
-            return null
+            return listOf()
         }
 
     }
-    suspend fun startUserSearch(user: String, currentPage: Int): List<GitHubSearchResult>?{
+    suspend fun startUserSearch(user: String, currentPage: Int): List<GitHubSearchResult>{
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -48,7 +48,7 @@ class GitHubAPISearchController(){
         }else {
             response.errorBody()?.let { Log.e("SearchUsersController", it.string()) }
             throw IOException()
-            return null
+            return listOf()
         }
     }
 }
