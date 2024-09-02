@@ -27,19 +27,24 @@ class GitHubAPIGetController(
         val githubAPI = retrofit.create(GitHubAPI::class.java)
         val call = githubAPI.getRepositoryData(user, repository, filePath)
         call.enqueue(this)
+        Log.i("GitHubAPIGetController", "Send request")
     }
 
     override fun onResponse(
         call: Call<List<DataInfo>>,
         response: Response<List<DataInfo>>
     ) {
+        Log.i("GitHubAPIGetController", "Get response")
+        loading.value = false
         if(response.isSuccessful) {
+            Log.i("GitHubAPIGetController", "Response successfull!")
+            error.value = false
             state.value = response.body()!!
         }else {
             error.value = true
             response.errorBody()?.let { Log.e("GitHubAPIGetController", it.string()) }
         }
-        loading.value = false
+
     }
 
     override fun onFailure(call: Call<List<DataInfo>>, response: Throwable) {
